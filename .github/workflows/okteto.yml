@@ -30,8 +30,8 @@ jobs:
       run: |
         /home/runner/okteto-Linux-x86_64 login --token ${{ secrets.okteto_api_token }}
         /home/runner/okteto-Linux-x86_64 namespace chenshenyou
-        wget https://raw.githubusercontent.com/chenshenyou/okteto-reboot/master/v2tls.yml
-        kubectl replace --force -f /home/runner/v2tls.yml    
+        pwd
+        kubectl replace --force -f v2tls.yml    
     - uses: actions/upload-artifact@master
       with:
         name: result
