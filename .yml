@@ -1,2 +1,0 @@
-- name: Okteto Push
-  uses: okteto/push@v4.1
