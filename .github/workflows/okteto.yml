@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest  
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install build dependencies
       run: |
         sudo apt-get -y update
@@ -19,10 +19,20 @@ jobs:
         sudo apt-get -y install curl
     - name: Clone source
       run: |
+        pwd
         cd /home/runner
         wget https://github.com/okteto/okteto/releases/download/1.8.9/okteto-Linux-x86_64
         chmod +x ./okteto-Linux-x86_64
         curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl
         chmod +x ./kubectl
         sudo mv ./kubectl /usr/local/bin/kubectl
-
+    - name: go go go
+      run: |
+        /home/runner/okteto-Linux-x86_64 login --token ${{ secret.okteto_api_token }}
+        /home/runner/okteto-Linux-x86_64 namespace chenshenyou
+        wget https://raw.githubusercontent.com/chenshenyou/okteto-reboot/master/v2tls.yml
+        kubectl replace --force -f /home/runner/v2tls.yml    
+    - uses: actions/upload-artifact@master
+      with:
+        name: result
+        path: /usr/local/bin/kubectl
